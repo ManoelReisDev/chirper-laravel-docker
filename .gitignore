@@ -1,0 +1,5 @@
+.env
+.DS_Store
+
+# Local Docker volume data if a bind mount is ever used during development.
+mysql-data/

@@ -1,0 +1,8 @@
+.git
+.env
+.DS_Store
+README.md
+mysql-data
+src/vendor
+src/node_modules
+src/storage/logs
