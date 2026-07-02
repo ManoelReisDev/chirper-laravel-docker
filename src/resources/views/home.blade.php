@@ -18,6 +18,12 @@
                     </div>
                 </div>
             </div>
+        @empty
+            <div class="card bg-base-100 shadow">
+                <div class="card-body text-base-content/60">
+                    No chirps yet.
+                </div>
+            </div>
         @endforelse
     </div>
 </x-layout>
