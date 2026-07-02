@@ -15,8 +15,8 @@ class ChirpSeeder extends Seeder
         $users = User::count() < 3
             ? collect([
                 User::create([
-                    'name' => 'Alice Developer',
-                    'email' => 'alice@example.com',
+                    'name' => 'Taylor Developer',
+                    'email' => 'taylor@laravel.com',
                     'password' => bcrypt('password'),
                 ]),
                 User::create([
