@@ -9,6 +9,8 @@
 
 ---
 
+<img width="947" height="857" alt="image" src="https://github.com/user-attachments/assets/535ad3b8-9081-4ee2-9cd4-579d4b95ad7b" />
+
 ## Visão Geral
 
 Este projeto foi desenvolvido como prática de back-end com Laravel, usando uma arquitetura organizada, autenticação básica, autorização por policy e interface construída com Blade.
