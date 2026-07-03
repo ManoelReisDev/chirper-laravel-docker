@@ -20,36 +20,35 @@
             @endif
 
             <div class="min-w-0 flex-1">
-                <div class="flex justify-between w-full gap-4">
-                    <div class="flex min-w-0 items-center gap-1">
+                <div class="flex justify-between w-full">
+                    <div class="flex items-center gap-1">
                         <span class="text-sm font-semibold">{{ $chirp->user ? $chirp->user->name : 'Anonymous' }}</span>
                         <span class="text-base-content/60">·</span>
-                        <span class="text-sm text-base-content/60 whitespace-nowrap">{{ $chirp->created_at->diffForHumans() }}</span>
+                        <span class="text-sm text-base-content/60">{{ $chirp->created_at->diffForHumans() }}</span>
                         @if ($chirp->updated_at->gt($chirp->created_at->addSeconds(5)))
                             <span class="text-base-content/60">·</span>
-                            <span class="text-sm text-base-content/60 italic whitespace-nowrap">edited</span>
+                            <span class="text-sm text-base-content/60 italic">edited</span>
                         @endif
                     </div>
 
                     @can('update', $chirp)
-                        <div class="flex shrink-0 gap-1">
-                            <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs"> Edit </a>
+                        <div class="flex gap-1">
+                            <a href="/chirps/{{ $chirp->id }}/edit" class="btn btn-ghost btn-xs">
+                                Edit
+                            </a>
                             <form method="POST" action="/chirps/{{ $chirp->id }}">
                                 @csrf
                                 @method('DELETE')
-                                <button
-                                    type="submit"
+                                <button type="submit"
                                     onclick="return confirm('Are you sure you want to delete this chirp?')"
-                                    class="btn btn-ghost btn-xs text-error"
-                                >
+                                    class="btn btn-ghost btn-xs text-error">
                                     Delete
                                 </button>
                             </form>
                         </div>
                     @endcan
                 </div>
-
-                <p class="mt-2 leading-relaxed">{{ $chirp->message }}</p>
+                <p class="mt-1">{{ $chirp->message }}</p>
             </div>
         </div>
     </div>
