@@ -6,6 +6,7 @@ use App\Models\Chirp;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
+
 class ChirpController extends Controller
 {
     /**
@@ -23,40 +24,41 @@ class ChirpController extends Controller
 
     public function store(Request $request)
     {
-        $validated = $request->validate(
-            [
-                'message' => 'required|string|max:255',
-            ],
-            [
-                'message.required' => 'Please write something to chirp!',
-                'message.max' => 'Chirps must be 255 characters or less.',
-            ],
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+        ], 
+        [
+            'message.required' => 'The message field is required.',
+            'message.string' => 'The message must be a string.',
+            'message.max' => 'The message may not be greater than 255 characters.',
+        ]
         );
 
-        \App\Models\Chirp::create([
-            'message' => $validated['message'],
-            'user_id' => null,
-        ]);
+        // Use the authenticated user
+        auth()->user()->chirps()->create($validated);
 
-
-        return redirect('/')->with('success', 'Chirp created!');
+        return redirect('/')->with('success', 'Your chirp has been posted!');
     }
 
     public function edit(Chirp $chirp)
     {
+        $this->authorize('update', $chirp);
+
         return view('chirps.edit', compact('chirp'));
     }
 
     public function update(Request $request, Chirp $chirp)
     {
-        $validated = $request->validate(
-            [
-                'message' => 'required|string|max:255',
-            ],
-            [
-                'message.required' => 'Please write something to chirp!',
-                'message.max' => 'Chirps must be 255 characters or less.',
-            ],
+        $this->authorize('update', $chirp);
+
+        $validated = $request->validate([
+            'message' => 'required|string|max:255',
+        ], 
+        [
+            'message.required' => 'The message field is required.',
+            'message.string' => 'The message must be a string.',
+            'message.max' => 'The message may not be greater than 255 characters.',
+        ]
         );
 
         $chirp->update($validated);
@@ -66,6 +68,8 @@ class ChirpController extends Controller
 
     public function destroy(Chirp $chirp)
     {
+        $this->authorize('delete', $chirp);
+
         $chirp->delete();
 
         return redirect('/')->with('success', 'Chirp deleted!');
